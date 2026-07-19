@@ -86,8 +86,8 @@ export function FloatingPosters() {
         return (
           <div key={colIndex} className="flex-1 flex flex-col relative h-[200vh] -top-[50vh]">
              <div
-               style={{ '--duration': `${120 + (colIndex % 3) * 40}s` } as React.CSSProperties}
-               className="flex flex-col gap-2 pb-2 sm:gap-4 sm:pb-4 absolute w-full animate-scroll-down"
+               style={{ animation: `scroll-down ${200 + (colIndex % 3) * 40}s linear infinite` }}
+               className="flex flex-col gap-2 pb-2 sm:gap-4 sm:pb-4 absolute w-full"
              >
                {loopingPosters.map((poster, pIndex) => (
                  <img 
