@@ -1,0 +1,6 @@
+{
+  "name": "JasonForReels",
+  "description": "A portfolio website showcasing all my projects including WatchGuide.app and CineBrace.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
