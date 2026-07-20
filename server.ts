@@ -1,6 +1,9 @@
 import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 let cachedPosters: string[] = [];
 let nextFetchTime: number = 0;
@@ -9,11 +12,14 @@ function getNextSASTMidnightWeek(): number {
   const now = new Date();
   // Current time in SAST (UTC+2)
   const d = new Date(now.getTime() + 2 * 3600 * 1000);
+  
   // Get days until Sunday (0)
   const day = d.getUTCDay();
   const daysUntilSunday = (7 - day) % 7 || 7; 
+  
   d.setUTCDate(d.getUTCDate() + daysUntilSunday);
   d.setUTCHours(0, 0, 0, 0); // Midnight
+  
   // Convert back to UTC time timestamp
   return d.getTime() - 2 * 3600 * 1000;
 }

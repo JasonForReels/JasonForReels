@@ -30,7 +30,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: index * 0.2 }}
       whileHover={{ y: -5, scale: 1.02 }}
-      className="group relative flex flex-col justify-center items-center p-12 sm:p-16 rounded-3xl overflow-hidden transition-all duration-500 isolation-isolate border border-white/20 bg-zinc-900/30 hover:bg-zinc-900/50 backdrop-blur-xl shadow-2xl aspect-square sm:aspect-auto sm:min-h-[400px]"
+      className="group relative flex flex-col justify-center items-center p-6 sm:p-8 rounded-3xl overflow-hidden transition-all duration-500 isolation-isolate border border-white/20 bg-zinc-900/30 hover:bg-zinc-900/50 backdrop-blur-xl shadow-2xl aspect-auto min-h-[200px] sm:min-h-[240px]"
     >
       {/* Interactive Cursor Glow */}
       <motion.div
