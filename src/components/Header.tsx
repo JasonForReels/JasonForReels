@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 
 export function Header() {
   return (
-    <header className="absolute top-0 left-0 right-0 z-50 py-6 px-6 md:px-12 flex justify-between items-center max-w-6xl mx-auto">
+    <header className="absolute top-0 left-0 right-0 z-50 px-6 md:px-12 flex justify-between items-center max-w-6xl mx-auto" style={{ paddingTop: 'max(1.5rem, env(safe-area-inset-top))', paddingBottom: '1.5rem' }}>
       <div className="font-display font-bold text-xl tracking-tight text-white">
         JasonForReels
       </div>
