@@ -27,12 +27,34 @@ export function FloatingPosters() {
           const data = await res.json();
           if (data.posters && data.posters.length > 0) {
             setPosters(data.posters);
-            localStorage.setItem('tmdb_posters_cache', JSON.stringify({ posters: data.posters }));
+            localStorage.setItem('tmdb_posters_cache', JSON.stringify({ posters: data.posters, timestamp: Date.now() }));
             return;
           }
         }
       } catch (err) {
-        console.error("Failed to load posters", err);
+        // Backend might not exist on static deployments
+      }
+
+      // Fallback to direct TMDB fetch for static deployments
+      try {
+        const apiKey = "f011d1fa3817ec54bdeaf6ede16bc937";
+        const res = await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${apiKey}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.results) {
+            const tmdbPosters = data.results
+              .filter((m: any) => m.poster_path)
+              .map((m: any) => `https://image.tmdb.org/t/p/w500${m.poster_path}`);
+            
+            if (tmdbPosters.length > 0) {
+              setPosters(tmdbPosters);
+              localStorage.setItem('tmdb_posters_cache', JSON.stringify({ posters: tmdbPosters, timestamp: Date.now() }));
+              return;
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Direct TMDB fetch failed", err);
       }
       
       if (!hasValidPosters) {
@@ -96,9 +118,13 @@ export function FloatingPosters() {
       <div className="absolute inset-0 z-10 bg-zinc-950/40 backdrop-blur-[2px]" />
       
       {columnData.map((colPosters, colIndex) => {
-        // Duplicate posters to create exactly two identical halves for perfect looping
+        // Ensure baseBlock has enough posters to cover ~150vh for perfect looping
+        // 12 posters per column is extremely safe and keeps DOM nodes low
+        const targetBaseLength = 12;
+        const repeatCount = Math.ceil(targetBaseLength / Math.max(1, colPosters.length));
+        
         const baseBlock = [];
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < repeatCount; i++) {
           baseBlock.push(...colPosters);
         }
         const loopingPosters = [...baseBlock, ...baseBlock];
@@ -115,7 +141,11 @@ export function FloatingPosters() {
                    src={poster} 
                    alt="" 
                    className="w-full aspect-[2/3] object-cover rounded-lg sm:rounded-xl shadow-2xl opacity-80 bg-zinc-900" 
-                   onError={(e) => { e.currentTarget.style.opacity = '0'; }}
+                   onError={(e) => { 
+                     if (!e.currentTarget.src.includes('data:image')) {
+                       e.currentTarget.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' fill='%2318181b'/%3E%3C/svg%3E";
+                     }
+                   }}
                  />
                ))}
              </div>
