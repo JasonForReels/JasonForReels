@@ -12,7 +12,9 @@ export function FloatingPosters() {
         const cached = localStorage.getItem('tmdb_posters_cache');
         if (cached) {
           const parsed = JSON.parse(cached);
-          if (parsed.posters && parsed.posters.length > 0) {
+          // Check if cache is from within the last 12 hours
+          const isCacheRecent = parsed.timestamp && (Date.now() - parsed.timestamp < 12 * 60 * 60 * 1000);
+          if (parsed.posters && parsed.posters.length > 0 && isCacheRecent) {
             setPosters(parsed.posters);
             hasValidPosters = true;
           }
@@ -58,23 +60,23 @@ export function FloatingPosters() {
       }
       
       if (!hasValidPosters) {
-        // Fallback posters if API fails and no cache exists
+        // Fallback posters if API fails and no cache exists or cache is expired
         const fallback = [
-          "https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg",
-          "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-          "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
-          "https://image.tmdb.org/t/p/w500/gEU2QlsUUQZnD0sB4b9861P2FfO.jpg",
-          "https://image.tmdb.org/t/p/w500/7rrB2A9G2OqDkY8BqTOrC3XWn9J.jpg",
-          "https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8OSqEpAWV.jpg",
-          "https://image.tmdb.org/t/p/w500/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg",
-          "https://image.tmdb.org/t/p/w500/3xnWaLQjelJDDF7LT1WBo6f4BRe.jpg",
-          "https://image.tmdb.org/t/p/w500/fqv8v6AycXKsivp1T5yKtLbxc34.jpg",
-          "https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2IGkp3LuB.jpg",
-          "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIhq1400wHLILG.jpg",
-          "https://image.tmdb.org/t/p/w500/A4j8S6moJS2zNtRR8oWF08gRnL5.jpg"
+          "https://image.tmdb.org/t/p/w500/5rhTDKUhPYvpdQIijFIs5VoWsON.jpg",
+          "https://image.tmdb.org/t/p/w500/rhGx6E3qRNMgj3i5su2oukNHwIQ.jpg",
+          "https://image.tmdb.org/t/p/w500/bRwnj8WEKBCvmfeUNOukJPwB43K.jpg",
+          "https://image.tmdb.org/t/p/w500/1KlYdWoOrbL5ux357rW9LC155qw.jpg",
+          "https://image.tmdb.org/t/p/w500/x19dchU8e38vQfW4epzOsQNLuZ2.jpg",
+          "https://image.tmdb.org/t/p/w500/xdhLAADGSse8KCrsDLBuM5b68Cg.jpg",
+          "https://image.tmdb.org/t/p/w500/zKVgiv5qHCvCLT4A2ymJi5QeXDH.jpg",
+          "https://image.tmdb.org/t/p/w500/zP19YO60jwEsfKd5Qf1UvA5uJu8.jpg",
+          "https://image.tmdb.org/t/p/w500/ztadKzIIR0ERYqpHteaPFtk7inP.jpg",
+          "https://image.tmdb.org/t/p/w500/r4lVJVO1BeBb11cBcXBdbHc9e9k.jpg",
+          "https://image.tmdb.org/t/p/w500/sfQtVlIHljToOwYjhe21KPGzZWK.jpg",
+          "https://image.tmdb.org/t/p/w500/1n37BJchWHLiSYQkuFxe5KjB951.jpg"
         ];
         setPosters(fallback);
-        localStorage.setItem('tmdb_posters_cache', JSON.stringify({ posters: fallback }));
+        localStorage.setItem('tmdb_posters_cache', JSON.stringify({ posters: fallback, timestamp: Date.now() }));
       }
     };
     fetchPosters();
@@ -119,8 +121,8 @@ export function FloatingPosters() {
       
       {columnData.map((colPosters, colIndex) => {
         // Ensure baseBlock has enough posters to cover ~150vh for perfect looping
-        // 12 posters per column is extremely safe and keeps DOM nodes low
-        const targetBaseLength = 12;
+        // 30 posters per column is extremely safe and keeps DOM nodes low
+        const targetBaseLength = 30;
         const repeatCount = Math.ceil(targetBaseLength / Math.max(1, colPosters.length));
         
         const baseBlock = [];
