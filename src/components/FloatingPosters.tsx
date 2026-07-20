@@ -58,29 +58,49 @@ export function FloatingPosters() {
     fetchPosters();
   }, []);
 
-  const columns = 6;
+  const [columns, setColumns] = useState(6);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setColumns(window.innerWidth < 640 ? 3 : window.innerWidth < 1024 ? 4 : 6);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const columnData = useMemo(() => {
     if (posters.length === 0) return [];
     
+    // Ensure we have enough posters to avoid empty columns
+    let filledPosters = [...posters];
+    if (filledPosters.length > 0) {
+      while (filledPosters.length < columns * 4) {
+        filledPosters = [...filledPosters, ...posters];
+      }
+    }
+    
     // Distribute posters into columns
     const cols: string[][] = Array.from({ length: columns }).map(() => []);
-    posters.forEach((poster, i) => {
+    filledPosters.forEach((poster, i) => {
       cols[i % columns].push(poster);
     });
     return cols;
-  }, [posters]);
+  }, [posters, columns]);
 
   if (posters.length === 0) return null;
 
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-zinc-950 flex gap-2 sm:gap-4 p-2 sm:p-4">
+    <div className="fixed -inset-10 z-0 overflow-hidden pointer-events-none bg-zinc-950 flex gap-2 sm:gap-4 p-4 sm:p-8">
       {/* Dimmed Overlay */}
-      <div className="absolute inset-0 z-10 bg-zinc-950/30 backdrop-blur-[1px]" />
+      <div className="absolute inset-0 z-10 bg-zinc-950/40 backdrop-blur-[2px]" />
       
       {columnData.map((colPosters, colIndex) => {
         // Duplicate posters to create exactly two identical halves for perfect looping
-        const baseBlock = [...colPosters, ...colPosters, ...colPosters, ...colPosters];
+        const baseBlock = [];
+        for (let i = 0; i < 12; i++) {
+          baseBlock.push(...colPosters);
+        }
         const loopingPosters = [...baseBlock, ...baseBlock];
         
         return (
