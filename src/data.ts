@@ -21,22 +21,16 @@ export const projects: Project[] = [
     ]
   },
   {
-    id: "cinebrace",
-    title: "CineBrace",
-    description: "An intelligent, AI-powered cinematic analysis and recommendation engine. Explore films through a dynamic, conversational interface powered by generative models.",
-    url: "https://cinebrace.ai.studio",
-    tags: ["AI", "Movies", "Web App"],
+    id: "livecount",
+    title: "LiveCount",
+    description: "Live YouTube subscriber counts that show their working. YouTube only publishes a rounded number, so every live counter is an estimate — LiveCount is the one that says so, and explains how each figure was reached.",
+    url: "https://livecount.space",
+    tags: ["YouTube", "Analytics", "Web App"],
     features: [
-      "AI-driven film recommendations and insights",
-      "Deep semantic search for tropes and genres",
-      "Responsive, next-generation web experience"
+      "Live counters built from the site's own recorded readings, with uncertain digits visibly dimmed",
+      "Growth rates derived from milestone crossings, weighted fits and view velocity",
+      "Projections from one day to a year, each given as a range rather than a false exact figure"
     ],
-    platforms: ["Web"],
-    posters: [
-      "https://image.tmdb.org/t/p/w500/gEU2QlsUUQZnD0sB4b9861P2FfO.jpg",
-      "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
-      "https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2IGkp3LuB.jpg",
-      "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-    ]
+    platforms: ["Web"]
   }
 ];
