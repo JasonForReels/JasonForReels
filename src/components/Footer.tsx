@@ -7,7 +7,7 @@ export function Footer() {
         </p>
         <div className="flex items-center gap-8 text-sm font-medium text-zinc-400">
           <a href="https://watchguide.app" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">WatchGuide</a>
-          <a href="https://cinebrace.ai.studio" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">CineBrace</a>
+          <a href="https://livecount.space" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LiveCount</a>
         </div>
       </div>
     </footer>
