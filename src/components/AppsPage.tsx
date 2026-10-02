@@ -6,6 +6,7 @@ import { WatchGuideLogo } from './WatchGuideLogo';
 
 const logos: Record<string, ReactNode> = {
   watchguide: <WatchGuideLogo />,
+  reelmeter: <img src="/reelmeter-icon.png" alt="Reelmeter logo" className="w-16 h-16 shrink-0" />,
 };
 
 export function AppsPage() {
@@ -36,17 +37,26 @@ export function AppsPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-4 sm:gap-5">
                 {logos[app.id]}
-                <h2 className="text-4xl sm:text-5xl font-display font-bold text-white tracking-tight">{app.title}</h2>
+                <div className="flex flex-col items-start gap-2">
+                  <h2 className="text-4xl sm:text-5xl font-display font-bold text-white tracking-tight">{app.title}</h2>
+                  {app.comingSoon && (
+                    <span className="text-xs font-semibold uppercase tracking-wider text-white px-2.5 py-1 rounded-full bg-white/10 border border-white/20">
+                      Coming soon
+                    </span>
+                  )}
+                </div>
               </div>
-              <a
-                href={app.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="self-start sm:self-auto flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 transition-all text-sm font-medium text-white"
-              >
-                <span>Visit site</span>
-                <ExternalLink className="w-4 h-4" />
-              </a>
+              {!app.comingSoon && (
+                <a
+                  href={app.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="self-start sm:self-auto flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 transition-all text-sm font-medium text-white"
+                >
+                  <span>Visit site</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              )}
             </div>
 
             {app.platforms && (
