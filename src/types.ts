@@ -7,4 +7,5 @@ export interface Project {
   features: string[];
   platforms?: string[];
   posters?: string[];
+  comingSoon?: boolean;
 }
