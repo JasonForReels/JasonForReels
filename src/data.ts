@@ -53,5 +53,19 @@ export const apps: Project[] = [
     ],
     platforms: ["iOS"],
     comingSoon: true
+  },
+  {
+    id: "trailertape",
+    title: "TrailerTape",
+    description: "Mixtapes for movie lovers. Put together tapes of movie trailers, hand-picked and in your own order, and play them on the biggest screen in the house.",
+    url: "https://trailertape.space",
+    tags: ["Trailers", "Movies", "Native App"],
+    features: [
+      "Build playlists of clean, direct trailer videos and play them full screen on Apple TV",
+      "TrailerTape Remote for iPhone: add trailers from your phone, then press play on the couch",
+      "Edit your tapes from any browser, free and with no account to create"
+    ],
+    platforms: ["tvOS", "iOS"],
+    comingSoon: true
   }
 ];

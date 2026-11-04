@@ -5,7 +5,7 @@ interface Env {
 }
 
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: { waitUntil(p: Promise<unknown>): void }): Promise<Response> {
     const url = new URL(request.url);
     if (url.pathname !== "/api/posters") return env.ASSETS.fetch(request);
 

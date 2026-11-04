@@ -7,6 +7,7 @@ import { WatchGuideLogo } from './WatchGuideLogo';
 const logos: Record<string, ReactNode> = {
   watchguide: <WatchGuideLogo />,
   reelmeter: <img src="/reelmeter-icon.png" alt="Reelmeter logo" className="w-16 h-16 shrink-0" />,
+  trailertape: <img src="/trailertape-icon.png" alt="TrailerTape logo" className="w-16 h-16 shrink-0 rounded-2xl" />,
 };
 
 export function AppsPage() {
